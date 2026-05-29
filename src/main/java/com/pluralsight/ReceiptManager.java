@@ -1,5 +1,6 @@
 package com.pluralsight;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
@@ -10,6 +11,12 @@ public class ReceiptManager {
     public static void saveReceipt(Order order) {
 
         try {
+
+            File folder = new File("receipts");
+
+            if (!folder.exists()) {
+                folder.mkdir();
+            }
 
             DateTimeFormatter formatter =
                     DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss");
@@ -31,9 +38,13 @@ public class ReceiptManager {
 
             pw.close();
 
-        } catch (Exception e) {
+            System.out.println("Receipt saved!");
 
-            System.out.println("Error saving receipt.");
+        }
+        catch (Exception e) {
+
+            System.out.println("Error saving receipt:");
+            System.out.println(e.getMessage());
         }
     }
 }
